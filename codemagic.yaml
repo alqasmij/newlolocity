@@ -19,7 +19,7 @@ workflows:
       cache_paths: []
     scripts:
       - keychain initialize
-      - app-store-connect fetch-signing-files "com.citylolo.app.citylolo" --type IOS_APP_STORE
+      - app-store-connect fetch-signing-files "com.citylolo.app.citylolo" --type IOS_APP_STORE --create --profiles-dir=PROFILES_DIRECTORY
         --create
       - keychain add-certificates
       - xcode-project use-profiles
