@@ -25,9 +25,8 @@ workflows:
       - xcode-project use-profiles
       - flutter packages pub get
       - find . -name "Podfile" -execdir pod install \;
-      - flutter build ipa --release \
-        --build-number=$(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1)) \
-        --export-options-plist=/Users/builder/export_options.plist
+      - flutter build ipa --release
+      - flutter build ipa --export-options-plist=/Users/builder/export_options.plist
       - keychain use-login
     artifacts:
       - build/ios/ipa/*.ipa
