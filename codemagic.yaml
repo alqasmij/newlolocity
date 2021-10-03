@@ -18,18 +18,17 @@ workflows:
     cache:
       cache_paths: []
     scripts:
-      - flutter packages pub get
-      - find . -name "Podfile" -execdir pod install \;
       - keychain initialize
       - app-store-connect fetch-signing-files "com.citylolo.app.citylolo" --type IOS_APP_STORE
         --create
       - keychain add-certificates
-      - app-store-connect fetch-signing-files $BUNDLE_ID --type IOS_APP_STORE --create
       - xcode-project use-profiles
-      - flutter build ipa --release \
-        --build-name=1.0.0 \
-        --build-number=$(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1)) \
-        --export-options-plist=/Users/builder/export_options.plist
+      - flutter packages pub get
+      - find . -name "Podfile" -execdir pod install \;
+      - xcode-project build-ipa \
+        --workspace "Runner.xcworkspace" \
+        --scheme "Runner"
+      - keychain use-login
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
