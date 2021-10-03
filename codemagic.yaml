@@ -26,7 +26,6 @@ workflows:
       - keychain add-certificates
       - app-store-connect fetch-signing-files $BUNDLE_ID --type IOS_APP_STORE --create
       - xcode-project use-profiles
-      - flutter build ipa --export-options-plist=/Users/builder/export_options.plist
       - flutter build ipa --release \
         --build-name=1.0.0 \
         --build-number=$(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1)) \
